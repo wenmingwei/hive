@@ -2,6 +2,9 @@
 
 > Collection of my utility
 
-1. Protobuf to JSON
 
-proto-json-mapper
+|   Module   |  Description  |  Version   |
+| ---- | ---- | ---- |
+|   proto-json-mapper   | serialize Protobuf message to JSON, and deserialize JSON to Protobuf message | 1.0-SNAPSHOT |
+|      |      |      |
+|      |      |      |
