@@ -1,0 +1,3 @@
+rootProject.name = 'hive'
+include 'proto-json-mapper'
+
