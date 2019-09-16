@@ -1,3 +1,4 @@
 rootProject.name = 'hive'
 include 'proto-json-mapper'
+include 'grpc-spring-boot-starter'
 

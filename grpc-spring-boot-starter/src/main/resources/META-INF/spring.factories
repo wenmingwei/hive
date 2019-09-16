@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+wenmingwei.providers.GrpcAutoConfiguration,\
+wenmingwei.consumers.GrpcAutoConfiguration
