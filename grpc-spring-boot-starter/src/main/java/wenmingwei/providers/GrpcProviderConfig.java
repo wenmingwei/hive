@@ -15,7 +15,7 @@ import java.util.Set;
 @Configuration
 @Data
 @ConfigurationProperties(prefix = "grpc.server")
-public class GrpcConfig {
+public class GrpcProviderConfig {
 
     private List<String> host = new ArrayList<>();
     private List<Integer> port = new ArrayList<>();

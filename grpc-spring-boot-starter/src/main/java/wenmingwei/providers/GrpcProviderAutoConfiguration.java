@@ -14,19 +14,16 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Configuration
 @ConditionalOnProperty(value = "grpc.provider.enabled", havingValue = "true", matchIfMissing = true)
-public class GrpcAutoConfiguration {
+public class GrpcProviderAutoConfiguration {
 
     @Autowired
-    private GrpcConfig grpcConfig;
+    private GrpcProviderConfig grpcProviderConfig;
 
     @Autowired(required = false)
     private Map<String, Customizer> customizers;
@@ -38,18 +35,19 @@ public class GrpcAutoConfiguration {
 
     @PostConstruct
     public void startup() {
-        grpcConfig.getCustomizer().forEach(customizer -> {
+        grpcProviderConfig.getCustomizer().forEach(customizer -> {
             if (customizers == null || customizers.get(customizer) == null) {
                 throw new IllegalArgumentException("Customizer(" + customizer + ") is NOT Defined.");
             }
         });
 
-        for (int i = 0; i < grpcConfig.getName().size(); i++) {
-            String name = grpcConfig.getName().get(i);
-            String host = grpcConfig.getHost().get(i);
-            Integer port = grpcConfig.getPort().get(i);
-            String customizer = grpcConfig.getCustomizer().size() > i ? grpcConfig.getCustomizer().get(i) : null;
-            String serviceNames = grpcConfig.getServices().size() > i ? grpcConfig.getServices().get(i) : null;
+        Map<String, Server> servers = new HashMap<>();
+        for (int i = 0; i < grpcProviderConfig.getName().size(); i++) {
+            String name = grpcProviderConfig.getName().get(i);
+            String host = grpcProviderConfig.getHost().get(i);
+            Integer port = grpcProviderConfig.getPort().get(i);
+            String customizer = grpcProviderConfig.getCustomizer().size() > i ? grpcProviderConfig.getCustomizer().get(i) : null;
+            String serviceNames = grpcProviderConfig.getServices().size() > i ? grpcProviderConfig.getServices().get(i) : null;
 
             InetAddress address;
             try {
@@ -70,6 +68,7 @@ public class GrpcAutoConfiguration {
                 throw new RuntimeException("Failed to start server(" + name + ")", e);
             }
         });
+        this.servers = Collections.unmodifiableMap(servers);
     }
 
     @PreDestroy

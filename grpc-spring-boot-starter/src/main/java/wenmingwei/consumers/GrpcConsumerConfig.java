@@ -10,7 +10,7 @@ import java.util.Map;
 @Configuration
 @ConfigurationProperties(prefix = "grpc.consumers")
 @Data
-public class GrpcConfig {
+public class GrpcConsumerConfig {
 
     private Map<String, String> service = new HashMap<>();
 }

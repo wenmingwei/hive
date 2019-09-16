@@ -23,7 +23,7 @@ import java.net.URI;
 @Slf4j
 @Configuration
 @ConditionalOnProperty(value = "grpc.consumers.enabled", havingValue = "true", matchIfMissing = true)
-public class GrpcAutoConfiguration implements BeanFactoryPostProcessor {
+public class GrpcConsumerAutoConfiguration implements BeanFactoryPostProcessor {
 
     private static final String METHOD_NEW_ASYNC_STUB = "newStub";
     private static final String METHOD_NEW_BLOCKING_STUB = "newBlockingStub";
@@ -110,7 +110,7 @@ public class GrpcAutoConfiguration implements BeanFactoryPostProcessor {
                     throw new IllegalAccessException("Cannot find service name of (" + factoryClass.getCanonicalName() + ")");
                 }
 
-                GrpcConfig bean = this.beanFactory.getBean(GrpcConfig.class);
+                GrpcConsumerConfig bean = this.beanFactory.getBean(GrpcConsumerConfig.class);
                 String channelBuilder = bean.getService().get(serviceName);
                 if (channelBuilder == null) {
                     throw new IllegalArgumentException("Service(" + serviceName + ")'s provider is not specified.");
