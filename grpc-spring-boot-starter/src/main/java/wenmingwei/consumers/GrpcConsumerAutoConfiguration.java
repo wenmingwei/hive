@@ -134,9 +134,8 @@ public class GrpcConsumerAutoConfiguration implements BeanFactoryPostProcessor {
                 }
 
                 for (Method method : methods) {
-                    Object builtObject = method.invoke(factoryClass, channel);
-                    if (clazz.equals(builtObject.getClass())) {
-                        return builtObject;
+                    if (method.getReturnType().equals(clazz)) {
+                        return method.invoke(factoryClass, channel);
                     }
                 }
 
