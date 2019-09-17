@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Configuration
 @Data
-@ConfigurationProperties(prefix = "grpc.provider")
+@ConfigurationProperties(prefix = "grpc.providers")
 public class GrpcProviderConfig {
 
     private List<String> host = new ArrayList<>();
